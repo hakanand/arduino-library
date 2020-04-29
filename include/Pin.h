@@ -2,14 +2,15 @@
 #define _PIN_H
 
 #include <Arduino.h>
+#include "Helpers\ListItem.h"
 
-enum PinType 
+enum PinType
 {
     Digital,
     Analogue
 };
 
-class Pin
+class Pin : ListItem
 {
     protected:
         int _pin;
@@ -17,7 +18,7 @@ class Pin
         int _value;
         PinType _pinType;
 
-    protected:
+    public:
         Pin(int pin, int direction, PinType type);
         void SetValue(int value);
         int GetValue();
