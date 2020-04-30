@@ -6,7 +6,7 @@
 
 typedef int (*EventFunction)();
 
-class Event : ListItem
+class Event : public ListItem
 {
     private:
         unsigned int _lapCounter = 0;
@@ -45,8 +45,28 @@ class Event : ListItem
             Enable();
         }
 
+        Event(char * name, EventFunction func) : ListItem(name)
+        {
+            _function = func;
+            Enable();
+        }
+
+        Event(char * name, EventFunction func, int runEveryLaps) : ListItem(name)
+        {
+            _function = func;
+            _runEveryLaps = runEveryLaps;
+            Enable();
+        }
+
+        Event(char * name, EventFunction func, unsigned long runEveryMilliseconds) : ListItem(name)
+        {
+            _function = func;
+            _runEveryMilliseconds = runEveryMilliseconds;
+            Enable();
+        }
+
         virtual int Loop() {
-            int returnValue = -1; // Not executed
+            int returnValue = 0; // Not executed
             unsigned long now = millis();
 
             if(_enabled && _function != NULL && _lapCounter % _runEveryLaps == 0 && (now - _lastExecuted > _runEveryMilliseconds || now < _lastExecuted))
@@ -58,6 +78,11 @@ class Event : ListItem
             ++_lapCounter;
 
             return returnValue;
+        }
+
+        bool IsEnabled()
+        {
+            return _enabled;
         }
 
         int SampleEventFunction()

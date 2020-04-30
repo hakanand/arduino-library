@@ -15,6 +15,7 @@ class ButtonController
 
         static int SampleFunction()
         {
+            delay(80);
             DigitalPin pin(LED_BUILTIN, OUTPUT);
             return pin.ToggleValue();
         }
