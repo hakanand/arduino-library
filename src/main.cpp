@@ -5,6 +5,9 @@
 #include "Helpers\EventController.h"
 
 // DigitalPin testPin(2, INPUT);
+/*
+TimedEvent(controller->SampleFunction(*events), )
+*/
 
 EventController * events = new EventController();
 ButtonController * controller;
