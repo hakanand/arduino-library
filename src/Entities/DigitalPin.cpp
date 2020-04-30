@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <DigitalPin.h>
 
     DigitalPin::DigitalPin(int pin, int direction) : Pin(pin, direction, PinType::Digital)

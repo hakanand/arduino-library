@@ -1,21 +1,21 @@
-#include <Arduino.h>
+#include <arduino.h>
 #include <DigitalPin.h>
+#include "Helpers\ButtonController.h"
+#include "Helpers\Event.h"
 
-DigitalPin ledPin(LED_BUILTIN, OUTPUT);
-DigitalPin testPin(2, INPUT);
-char test[128];
+// DigitalPin testPin(2, INPUT);
 
-void setup() {
+ButtonController * controller;
+Event * event;
+
+void setup() 
+{
   Serial.begin(9600);
-  ledPin.SetLow();
+  controller = new ButtonController();
+  event = new Event(controller->SampleFunction, (unsigned long)5000);
 }
 
-void loop() {
-  // ledPin.ToggleValue();
-  int result = testPin.GetValue();
-
-  sprintf(test, "Value is %i", result);
-  Serial.println(test);
-
-  delay(1000);
+void loop() 
+{
+  event->Loop();
 }
