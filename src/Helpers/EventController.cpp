@@ -4,11 +4,11 @@ EventController::EventController()
 {   
 }
 
-int EventController::Loop(unsigned long loopMinLapLimit = 0)
+int EventController::Loop(unsigned long loopMinLapLimit)
 {
     int numberOfCallItems = 0;
 
-    // Check so that a delay is performed if this 
+    // Check so that a delay is performed if this is specified and the time for loop does not  
     if (loopMinLapLimit > 0)
     {
         unsigned long now = millis();
@@ -28,8 +28,14 @@ int EventController::Loop(unsigned long loopMinLapLimit = 0)
     {
         if (item->IsEnabled())
         {
+            Serial.println("Calling Event Loop function.");
             numberOfCallItems += item->Loop();
         }
+        else
+        {
+            Serial.println("Skipping - Event not enabled.");
+        }
+        
 
         item = (Event *)GetNextItem();
     }

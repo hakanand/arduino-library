@@ -17,7 +17,6 @@ class ListItem
 	protected:
 		ListItem * GetPrev() { return prev; };
 		ListItem * GetNext() { return next; };
-		LinkedList * GetOwner() { return owner; };
 
 	public:
 		ListItem();
@@ -34,6 +33,8 @@ class ListItem
 		virtual WORD	Write() { return 0; };
 		virtual const char *	TypeOfClass() { return classType; };
 		virtual void 	Switch(ListItem * pSwitch);
+		
+		LinkedList * GetOwner() { return owner; };
 
 		time_t	tmLastUsed;
 		char *	pszName;

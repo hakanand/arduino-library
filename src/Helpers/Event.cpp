@@ -1,47 +1,53 @@
 #include "Event.h"
 
-Event::Event()
+Event::Event(Pin * pin)
 {
+    _pin = pin;
+    Init(NULL, 0, 0, pin);
 }
 
-Event::Event(EventFunction func)
+Event::Event(EventFunction func, Pin * pin)
 {
-    _function = func;
+    Init(func, 0, 1, pin);
     Enable();
 }
 
-Event::Event(EventFunction func, int runEveryLaps)
+Event::Event(EventFunction func, int runEveryLaps, Pin * pin)
 {
-    _function = func;
-    _runEveryLaps = runEveryLaps;
+    Init(func, 0, runEveryLaps, pin);
     Enable();
 }
 
-Event::Event(EventFunction func, unsigned long runEveryMilliseconds)
+Event::Event(EventFunction func, unsigned long runEveryMilliseconds, Pin * pin)
+{
+    Init(func, runEveryMilliseconds, 1, pin);
+    Enable();
+}
+
+Event::Event(char * name, EventFunction func, Pin * pin) : ListItem(name)
+{
+    Init(func, 0, 1, pin);
+    Enable();
+}
+
+Event::Event(char * name, EventFunction func, int runEveryLaps, Pin * pin) : ListItem(name)
+{
+    Init(func, 0, runEveryLaps, pin);
+    Enable();
+}
+
+Event::Event(char * name, EventFunction func, unsigned long runEveryMilliseconds, Pin * pin) : ListItem(name)
+{
+    Init(func, runEveryMilliseconds, 1, pin);
+    Enable();
+}
+
+void Event::Init(EventFunction func, unsigned long runEveryMilliseconds, int runEveryLaps, Pin * relatedPin)
 {
     _function = func;
+    _runEveryLaps = max(runEveryLaps, 1);
     _runEveryMilliseconds = runEveryMilliseconds;
-    Enable();
-}
-
-Event::Event(char * name, EventFunction func) : ListItem(name)
-{
-    _function = func;
-    Enable();
-}
-
-Event::Event(char * name, EventFunction func, int runEveryLaps) : ListItem(name)
-{
-    _function = func;
-    _runEveryLaps = runEveryLaps;
-    Enable();
-}
-
-Event::Event(char * name, EventFunction func, unsigned long runEveryMilliseconds) : ListItem(name)
-{
-    _function = func;
-    _runEveryMilliseconds = runEveryMilliseconds;
-    Enable();
+    _pin = relatedPin; 
 }
 
 int Event::Loop() {
@@ -51,7 +57,7 @@ int Event::Loop() {
     if(_enabled && _function != NULL && _lapCounter % _runEveryLaps == 0 && (now - _lastExecuted > _runEveryMilliseconds || now < _lastExecuted))
     {
         _lastExecuted = now;
-        returnValue = _function();
+        returnValue = _function(this, _pin);
     }
 
     ++_lapCounter;
@@ -62,11 +68,4 @@ int Event::Loop() {
 bool Event::IsEnabled()
 {
     return _enabled;
-}
-
-int Event::SampleEventFunction()
-{
-    Serial.println("SampleEventFunction()");
-
-    return 0;
 }

@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Pin.h>
 
-class DigitalPin : Pin
+class DigitalPin : public Pin
 {
     private:
 

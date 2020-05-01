@@ -5,22 +5,26 @@
 #include "Event.h"
 #include "DigitalPin.h"
 
-#define LONGPRESS_MILLIS 3000
-#define DOUBLEPRESS_MILLIS 500
+class ButtonEvent;
 
-class ButtonEvent : Event
+typedef int (*ButtonEventFunction)(ButtonEvent *, DigitalPin *);
+
+#define LONGPRESS_MILLIS 1100
+#define DOUBLEPRESS_MILLIS 180
+
+class ButtonEvent : public Event
 {
     private:
-        EventFunction _onPress;
-        EventFunction _onHold;
-        EventFunction _onDoublePress;
+        ButtonEventFunction _onPress;
+        ButtonEventFunction _onHold;
+        ButtonEventFunction _onDoublePress;
         DigitalPin * _pin;
         bool _lastValue;
         unsigned long _startPressTime = 0;
         unsigned long _previousPressTime = 0;
 
     public:
-        ButtonEvent(DigitalPin * pin, EventFunction onPress, EventFunction onHold, EventFunction onDoublePress);
+        ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress);
         virtual int Loop();
 };
 
