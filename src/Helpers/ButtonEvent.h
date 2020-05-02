@@ -1,16 +1,15 @@
 #ifndef __BUTTONEVENT_H
 #define __BUTTONEVENT_H
 
-#include <arduino.h>
-#include "Event.h"
 #include "DigitalPin.h"
+#include "Event.h"
 
 class ButtonEvent;
 
 typedef int (*ButtonEventFunction)(ButtonEvent *, DigitalPin *);
 
 #define LONGPRESS_MILLIS 1100
-#define DOUBLEPRESS_MILLIS 180
+#define DOUBLEPRESS_MILLIS 200
 
 class ButtonEvent : public Event
 {
@@ -24,7 +23,9 @@ class ButtonEvent : public Event
         unsigned long _previousPressTime = 0;
 
     public:
-        ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress);
+        void * _relatedData;
+
+        ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
         virtual int Loop();
 };
 

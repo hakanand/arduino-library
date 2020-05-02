@@ -46,7 +46,7 @@ void Event::Init(EventFunction func, unsigned long runEveryMilliseconds, int run
 {
     _function = func;
     _runEveryLaps = max(runEveryLaps, 1);
-    _runEveryMilliseconds = runEveryMilliseconds;
+    _runEveryMilliseconds = max(runEveryMilliseconds, 0);
     _pin = relatedPin; 
 }
 

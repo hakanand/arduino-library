@@ -1,7 +1,7 @@
 #include "EventController.h"
 
 EventController::EventController()
-{   
+{  
 }
 
 int EventController::Loop(unsigned long loopMinLapLimit)
@@ -28,14 +28,13 @@ int EventController::Loop(unsigned long loopMinLapLimit)
     {
         if (item->IsEnabled())
         {
-            Serial.println("Calling Event Loop function.");
+            // Serial.println("Calling Event Loop function.");
             numberOfCallItems += item->Loop();
         }
         else
         {
-            Serial.println("Skipping - Event not enabled.");
+            // Serial.println("Skipping - Event not enabled.");
         }
-        
 
         item = (Event *)GetNextItem();
     }

@@ -1,12 +1,13 @@
 #include "ButtonEvent.h"
 
-ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress) : Event()
+ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData) : Event()
 {
     _pin = pin;
     _lastValue = _pin->GetValue();
     _onPress = onPress;
     _onHold = onHold;
     _onDoublePress = onDoublePress;
+    _relatedData = relatedData;
 
     Enable();
 }
@@ -48,6 +49,8 @@ int ButtonEvent::Loop()
             _previousPressTime = _startPressTime;
             _startPressTime = 0;
         }
+
+        _lastValue = value;
     }
 
     return 0;
