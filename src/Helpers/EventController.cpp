@@ -23,20 +23,30 @@ int EventController::Loop(unsigned long loopMinLapLimit)
         _lastExecution = millis();
     }
 
+    bool removal = false;
     Event * item = (Event *)GetFirstItem();
     while(item != NULL)
     {
         if (item->IsEnabled())
         {
-            // Serial.println("Calling Event Loop function.");
-            numberOfCallItems += item->Loop();
-        }
-        else
-        {
-            // Serial.println("Skipping - Event not enabled.");
+            ++numberOfCallItems;
+            EventResult * result = item->Loop();
+
+            if ((result->_hasExecuted && item->_removeAfterUse == true) || result->_shouldRemoveEvent == true)
+            {
+                removal = true;
+                item = (Event *)Remove(item);
+            }
         }
 
-        item = (Event *)GetNextItem();
+        if (removal == false)
+        {
+            item = (Event *)GetNextItem();
+        }
+        else // true
+        {
+            removal = false;
+        }
     }
 
     return numberOfCallItems;

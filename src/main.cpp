@@ -27,12 +27,13 @@ void setup()
   Event * event = new Event(ButtonController::SampleFunction, 2000UL, &pin);
   events->InsertLast(event);
 
-  ButtonEvent * bEvent = new ButtonEvent(&pin2, ButtonHandler::HandleButtonPress, ButtonHandler::HandleButtonLongPress, ButtonHandler::HandleButtonDoublePress);
+  DigitalPin * pins[] = { new DigitalPin(10, OUTPUT), new DigitalPin(11, OUTPUT), new DigitalPin(12, OUTPUT) };
+  ButtonEvent * bEvent = new ButtonEvent(&pin2, ButtonHandler::HandleButtonPress, ButtonHandler::HandleButtonLongPress, ButtonHandler::HandleButtonDoublePress, pins);
   events->InsertLast(bEvent);
 
   const unsigned long period = 180;
   unsigned long times[] = { period*7, period, period, period, period, period, period, period*3, period, period*3, period, period*3, period, period, period, period, period, period, 0 };
-  TimerEvent * tEvent = new TimerEvent(times, false, ButtonHandler::TogglePinForSosMessage, pin12);
+  TimerEvent * tEvent = new TimerEvent(times, true, ButtonHandler::TogglePinForSosMessage, pin12);
   events->InsertLast(tEvent);
 
   Serial.println("Initialized");

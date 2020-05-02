@@ -2,6 +2,7 @@
 #include "Helpers\TimerEvent.h"
 #include "Helpers\LinkedList.h"
 
+// Timer Events
 int ButtonHandler::HandleTimerLongPressCompleted(TimerEvent * event, Pin * pin, int order)
 {
     DigitalPin * btnPin = new DigitalPin(11, OUTPUT);
@@ -17,9 +18,11 @@ int ButtonHandler::TogglePinForSosMessage(TimerEvent * event, Pin * pin, int ord
     return 0;
 }
 
+// Button events
 int ButtonHandler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 {
-    DigitalPin * btnPin = new DigitalPin(10, OUTPUT);
+    DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[0];
+    // DigitalPin * btnPin = new DigitalPin(10, OUTPUT);
     btnPin->ToggleValue();
 
     Serial.println("Handling ButtonPress");
@@ -28,11 +31,21 @@ int ButtonHandler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 
 int ButtonHandler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
 {
-    DigitalPin * btnPin = new DigitalPin(11, OUTPUT);
+    DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[1];
+    // DigitalPin * btnPin = new DigitalPin(11, OUTPUT);
     btnPin->SetHigh();
 
+    // Check if there already is a pending "turn off diod".
     LinkedList * list = event->GetOwner();
-    list->InsertLast(new TimerEvent(15000, true, ButtonHandler::HandleTimerLongPressCompleted));
+    ListItem * l = list->LocateName("TurnOff15");
+    if (l != NULL)
+    {
+        Serial.println("Removing item from list.");
+        list->Remove(l);
+    }
+
+    Serial.println("Adding new  item to list.");
+    list->InsertLast(new TimerEvent("TurnOff15", 15000, true, ButtonHandler::HandleTimerLongPressCompleted));
 
     Serial.println("Handling ButtonLongPress");
     return 0;
@@ -40,7 +53,8 @@ int ButtonHandler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
 
 int ButtonHandler::HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin)
 {
-    DigitalPin * btnPin = new DigitalPin(12, OUTPUT);
+    DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[2];
+    // DigitalPin * btnPin = new DigitalPin(12, OUTPUT);
     btnPin->ToggleValue();
 
     Serial.println("Handling ButtonDoublePress");

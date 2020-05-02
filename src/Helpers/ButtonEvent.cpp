@@ -12,7 +12,7 @@ ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEv
     Enable();
 }
 
-int ButtonEvent::Loop()
+EventResult * ButtonEvent::Loop()
 {
     bool value = _pin->GetValue();
     unsigned long now = millis();
@@ -53,5 +53,5 @@ int ButtonEvent::Loop()
         _lastValue = value;
     }
 
-    return 0;
+    return &_result;
 }
