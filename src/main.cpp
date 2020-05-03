@@ -1,6 +1,5 @@
 #include <arduino.h>
 #include <DigitalPin.h>
-#include "Helpers\ButtonController.h"
 #include "Helpers\Event.h"
 #include "Helpers\EventController.h"
 #include "Helpers\ButtonEvent.h"
@@ -24,7 +23,7 @@ void setup()
 {
   Serial.begin(9600);
  
-  Event * event = new Event(ButtonController::SampleFunction, 2000UL, &pin);
+  Event * event = new Event(ButtonHandler::SampleFunction, 2000UL, &pin);
   events->InsertLast(event);
 
   DigitalPin * pins[] = { new DigitalPin(10, OUTPUT), new DigitalPin(11, OUTPUT), new DigitalPin(12, OUTPUT) };
@@ -33,7 +32,7 @@ void setup()
 
   const unsigned long period = 180;
   unsigned long times[] = { period*7, period, period, period, period, period, period, period*3, period, period*3, period, period*3, period, period, period, period, period, period, 0 };
-  TimerEvent * tEvent = new TimerEvent(times, true, ButtonHandler::TogglePinForSosMessage, pin12);
+  TimerEvent * tEvent = new TimerEvent("SOS", times, false, ButtonHandler::TogglePinForSosMessage, pin12);
   events->InsertLast(tEvent);
 
   Serial.println("Initialized");
@@ -41,10 +40,5 @@ void setup()
 
 void loop() 
 {
-  // int value = digitalRead(2);
-  // char message[1024];
-  // sprintf(message, "Loop %i (%i)", iter++, value);
-  // Serial.println(message);
-
   events->Loop();
 }

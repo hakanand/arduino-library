@@ -17,40 +17,39 @@ EventResult * ButtonEvent::Loop()
     bool value = _pin->GetValue();
     unsigned long now = millis();
 
-    if (value == _lastValue && value == true && _startPressTime > 0)
+    if (now - _startPressTime < SKIPPRESS_WITHIN_TIME)
     {
+        // To quick press (buttons fault)
+    }
+    else if (value == _lastValue && value == true && _startPressTime > 0)
+    {
+        // Long press (On Hold)
         if (now - _startPressTime > LONGPRESS_MILLIS && _onHold != NULL)
         {
-            Serial.println("OnHold()");
             _onHold(this, _pin);
-            _startPressTime = 0;
+            _previousPressTime = _startPressTime = 0;
+        }
+        // Double press
+        else if (_onDoublePress != NULL && _startPressTime - _previousPressTime <= DOUBLEPRESS_MILLIS)
+        {
+            _onDoublePress(this, _pin);
+            _previousPressTime = _startPressTime = 0;
         }
     }
     else if (value != _lastValue)
     {
         if (value == true)
         {
-            Serial.println("StartPress = Now()");
-            _startPressTime = millis();
-        }
-        else if (value == false && _startPressTime > 0)
-        {
-            if (_onPress != NULL && now - _startPressTime <= LONGPRESS_MILLIS)
-            {
-                Serial.println("OnPress()");
-                _onPress(this, _pin);
-            }
-            else if (_onDoublePress != NULL && _startPressTime - _previousPressTime <= DOUBLEPRESS_MILLIS)
-            {
-                Serial.println("OnDoublePress()");
-                _onDoublePress(this, _pin);
-            }
-
             _previousPressTime = _startPressTime;
-            _startPressTime = 0;
+            _startPressTime = now;
         }
 
         _lastValue = value;
+    }
+    else if (_startPressTime > 0 && now - _startPressTime > DOUBLEPRESS_MILLIS)
+    {
+        _onPress(this, _pin);
+        _previousPressTime = _startPressTime = 0;
     }
 
     return &_result;

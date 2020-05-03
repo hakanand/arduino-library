@@ -41,6 +41,7 @@ class Event : public ListItem
         virtual EventResult * Loop();
         bool IsEnabled() { return _enabled; }
         bool _removeAfterUse = false;
+        void SetEnabled(bool enable) { _enabled = enable; }
 };
 
 #endif

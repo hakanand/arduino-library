@@ -83,10 +83,6 @@ void TimerEvent::Init(unsigned long * delay, bool removeAfterUse, TimerEventFunc
         _arrayItemCount++;
     }
 
-    char message[128];
-    sprintf(message, "Item Count is %i", _arrayItemCount);
-    Serial.println(message);
-    
     _delays = (unsigned long *)malloc(sizeof(unsigned long) * _arrayItemCount);
     memcpy(_delays, delay, sizeof(unsigned long) * _arrayItemCount);
 

@@ -13,6 +13,7 @@ class ButtonHandler
         static int HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin);
         static int HandleTimerLongPressCompleted(TimerEvent * event, Pin * pin, int order);
         static int TogglePinForSosMessage(TimerEvent * event, Pin * pin, int order);
+        static int SampleFunction(Event * event, Pin * pin);
 };
 
 #endif

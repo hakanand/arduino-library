@@ -10,6 +10,7 @@ typedef int (*ButtonEventFunction)(ButtonEvent *, DigitalPin *);
 
 #define LONGPRESS_MILLIS 1100
 #define DOUBLEPRESS_MILLIS 200
+#define SKIPPRESS_WITHIN_TIME 30
 
 class ButtonEvent : public Event
 {
