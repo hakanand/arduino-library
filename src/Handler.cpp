@@ -1,9 +1,9 @@
-#include "ButtonHandler.h"
-#include "Helpers\TimerEvent.h"
-#include "Helpers\LinkedList.h"
+#include <TimerEvent.h>
+#include <LinkedList.h>
+#include "Handler.h"
 
 // Timer Events
-int ButtonHandler::HandleTimerLongPressCompleted(TimerEvent * event, Pin * pin, int order)
+int Handler::HandleTimerLongPressCompleted(TimerEvent * event, Pin * pin, int order)
 {
     DigitalPin * btnPin = new DigitalPin(11, OUTPUT);
     btnPin->SetLow();
@@ -12,7 +12,7 @@ int ButtonHandler::HandleTimerLongPressCompleted(TimerEvent * event, Pin * pin, 
     return 0;
 }
 
-int ButtonHandler::TogglePinForSosMessage(TimerEvent * event, Pin * pin, int order)
+int Handler::TogglePinForSosMessage(TimerEvent * event, Pin * pin, int order)
 {
     ((DigitalPin *)pin)->ToggleValue();
 
@@ -20,7 +20,7 @@ int ButtonHandler::TogglePinForSosMessage(TimerEvent * event, Pin * pin, int ord
 }
 
 // Button events
-int ButtonHandler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
+int Handler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 {
     DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[0];
     // DigitalPin * btnPin = new DigitalPin(10, OUTPUT);
@@ -29,7 +29,7 @@ int ButtonHandler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
     return 1;
 }
 
-int ButtonHandler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
+int Handler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
 {
     char * turnOff15Name = "TurnOff15";
     DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[1];
@@ -43,13 +43,13 @@ int ButtonHandler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
         list->Remove(l);
     }
 
-    list->InsertLast(new TimerEvent(turnOff15Name, 15000, true, ButtonHandler::HandleTimerLongPressCompleted));
+    list->InsertLast(new TimerEvent(turnOff15Name, 15000, true, Handler::HandleTimerLongPressCompleted));
     Serial.println("Handling ButtonLongPress");
 
     return 1;
 }
 
-int ButtonHandler::HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin)
+int Handler::HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin)
 {
     DigitalPin * btnPin = ((DigitalPin**)event->_relatedData)[2];
     // DigitalPin * btnPin = new DigitalPin(12, OUTPUT);
@@ -65,7 +65,7 @@ int ButtonHandler::HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin
     return 0;
 }
 
-int ButtonHandler::SampleFunction(Event * event, Pin * pin)
+int Handler::SampleFunction(Event * event, Pin * pin)
 {
     return ((DigitalPin*)pin)->ToggleValue();
 }

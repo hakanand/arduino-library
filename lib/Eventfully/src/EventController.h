@@ -2,7 +2,7 @@
 #define __EVENTCONTROLLER_H
 
 #include <arduino.h>
-#include "LinkedList.h"
+#include <LinkedList.h>
 #include "Event.h"
 
 class EventController : public LinkedList

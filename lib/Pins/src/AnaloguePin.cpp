@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include <AnaloguePin.h>
 #include <math.h>
+#include "AnaloguePin.h"
 
 AnaloguePin::AnaloguePin(int pin, int direction) : Pin(pin, direction, PinType::Analogue)
 {

@@ -1,7 +1,7 @@
 #ifndef __BUTTONEVENT_H
 #define __BUTTONEVENT_H
 
-#include "DigitalPin.h"
+#include <DigitalPin.h>
 #include "Event.h"
 
 class ButtonEvent;

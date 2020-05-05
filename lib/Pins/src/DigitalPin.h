@@ -2,7 +2,7 @@
 #define _DIGITALPIN_H
 
 #include <Arduino.h>
-#include <Pin.h>
+#include "Pin.h"
 
 class DigitalPin : public Pin
 {

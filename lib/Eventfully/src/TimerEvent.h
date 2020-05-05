@@ -1,7 +1,7 @@
 #ifndef __TIMEREVENT_H
 #define __TIMEREVENT_H
 
-#include "Pin.h"
+#include <Pin.h>
 #include "Event.h"
 
 class TimerEvent;

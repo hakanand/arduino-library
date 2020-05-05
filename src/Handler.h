@@ -1,11 +1,11 @@
-#ifndef __BUTTONHANDLER_H
-#define __BUTTONHANDLER_H
+#ifndef __HANDLER_H
+#define __HANDLER_H
 
 #include <DigitalPin.h>
-#include "Helpers\ButtonEvent.h"
-#include "Helpers\TimerEvent.h"
+#include <ButtonEvent.h>
+#include <TimerEvent.h>
 
-class ButtonHandler
+class Handler
 {
     public:
         static int HandleButtonPress(ButtonEvent * event, DigitalPin * pin);

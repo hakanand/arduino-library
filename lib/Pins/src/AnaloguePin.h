@@ -2,7 +2,7 @@
 #define _ANALOGUEPIN_H
 
 #include <Arduino.h>
-#include <Pin.h>
+#include "Pin.h"
 
 class AnaloguePin : public Pin
 {
