@@ -6,11 +6,6 @@
 #include "Helpers\TimerEvent.h"
 #include "ButtonHandler.h"
 
-// DigitalPin testPin(2, INPUT);
-/*
-TimedEvent(controller->SampleFunction(*events), )
-*/
-
 EventController * events = new EventController();
 
 DigitalPin pin(13, OUTPUT);

@@ -14,19 +14,17 @@ int EventController::Loop(unsigned long loopMinLapLimit)
         unsigned long now = millis();
         if (now - _lastExecution < loopMinLapLimit)
         {
-            // char message[128];
-            // sprintf(message, "Now executing sleep for %i ms", loopMinLapLimit - (now - _lastExecution));
-            // Serial.println(message);
             delay(loopMinLapLimit - (now - _lastExecution));
         }
 
         _lastExecution = millis();
     }
 
-    bool removal = false;
     Event * item = (Event *)GetFirstItem();
     while(item != NULL)
     {
+        bool removal = false;
+    
         if (item->IsEnabled())
         {
             ++numberOfCallItems;
@@ -42,10 +40,6 @@ int EventController::Loop(unsigned long loopMinLapLimit)
         if (removal == false)
         {
             item = (Event *)GetNextItem();
-        }
-        else // true
-        {
-            removal = false;
         }
     }
 
