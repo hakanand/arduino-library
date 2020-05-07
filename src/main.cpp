@@ -8,9 +8,14 @@
 
 EventController * events = new EventController();
 
-DigitalPin * pin13 = new DigitalPin(13, OUTPUT);
-DigitalPin * pin12 = new DigitalPin(12, OUTPUT);
+// Input pin for button.
 DigitalPin * pin2 = new DigitalPin(2, INPUT);
+
+// LED pins
+DigitalPin * pin10 = new DigitalPin(10, OUTPUT);
+DigitalPin * pin11 = new DigitalPin(11, OUTPUT);
+DigitalPin * pin12 = new DigitalPin(12, OUTPUT);
+DigitalPin * pin13 = new DigitalPin(13, OUTPUT);
 
 int iter = 0;
 
@@ -18,12 +23,12 @@ void setup()
 {
   Serial.begin(9600);
  
+  // Just do a continous blink every two seconds.
   Event * event = new Event(Handler::SampleFunction, 2000UL, pin13);
   events->InsertLast(event);
 
-  // Referenced data used in event-handler for ButtonEvent.
-  // Button is on PIN2 and the handlers manage Pin10-12.
-  DigitalPin * pins[] = { new DigitalPin(10, OUTPUT), new DigitalPin(11, OUTPUT), new DigitalPin(12, OUTPUT) };
+  // Button is on PIN2 and the button handler manage Pin10-12 which is sent along as Referenced data and is used in event-handler for ButtonEvent.
+  DigitalPin * pins[] = { pin10, pin11, pin12 };
   ButtonEvent * bEvent = new ButtonEvent(pin2, Handler::HandleButtonPress, Handler::HandleButtonLongPress, Handler::HandleButtonDoublePress, pins);
   events->InsertLast(bEvent);
 
