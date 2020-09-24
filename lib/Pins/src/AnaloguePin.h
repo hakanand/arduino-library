@@ -7,6 +7,7 @@
 class AnaloguePin : public Pin
 {
     private:
+        const float maxVoltage = 5.0;
 
     protected:
         float value;
