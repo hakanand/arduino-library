@@ -27,7 +27,7 @@ class ButtonEvent : public Event
         void * _relatedData;
 
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
-        virtual EventResult * Loop();
+        EventResult * Loop();
 };
 
 #endif

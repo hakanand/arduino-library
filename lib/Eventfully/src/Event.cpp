@@ -57,7 +57,8 @@ void Event::Init(EventFunction func, unsigned long runEveryMilliseconds, int run
     _pin = relatedPin; 
 }
 
-EventResult * Event::Loop() {
+EventResult * Event::Loop() 
+{
     unsigned long now = millis();
     _result._hasExecuted = false;
 

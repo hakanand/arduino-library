@@ -4,6 +4,14 @@
 
 AnaloguePin::AnaloguePin(int pin, int direction) : Pin(pin, direction, PinType::Analogue)
 {
+    res1 = 0;
+    res2 = 1;
+}
+
+AnaloguePin::AnaloguePin(int pin, int resistor1, int resistor2) : Pin(pin, INPUT, PinType::Analogue)
+{
+    res1 = resistor1;
+    res2 = resistor2;
 }
 
 void AnaloguePin::SetVoltage(float voltage)
@@ -18,4 +26,10 @@ float AnaloguePin::GetVoltage()
 {
     int value = GetValue();
     return value / 1024 * maxVoltage;
+}
+
+float AnaloguePin::GetResultingVoltage()
+{
+    int value = GetValue();
+    return value / (res1 + res2) * res2 / 1024 * maxVoltage;
 }
