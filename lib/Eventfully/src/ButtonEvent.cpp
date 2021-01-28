@@ -12,6 +12,13 @@ ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEv
     Enable();
 }
 
+ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, ButtonEventFunction onDown, ButtonEventFunction onUp, void * relatedData) : ButtonEvent(pin, onPress, onHold, onDoublePress, relatedData)
+{
+    _onDown = onDown;
+    _onUp = onUp;
+}
+
+
 EventResult * ButtonEvent::Loop()
 {
     bool value = _pin->GetValue();
@@ -42,6 +49,15 @@ EventResult * ButtonEvent::Loop()
         {
             _previousPressTime = _startPressTime;
             _startPressTime = now;
+
+            if (_onDown != NULL)
+            {
+                _onDown(this, _pin);
+            }
+        }
+        else if (_onUp != NULL)
+        {
+            _onUp(this, _pin);
         }
 
         _lastValue = value;
