@@ -9,14 +9,14 @@
 EventController * events = new EventController();
 
 // Input pin for button.
-DigitalPin * pinEmergencyStop = new DigitalPin(2, INPUT);
-DigitalPin * pinButton = new DigitalPin(3, INPUT);
-DigitalPin * pinAcAttached = new DigitalPin(4, INPUT);
+DigitalPin * pinButton = new DigitalPin(4, INPUT);
+DigitalPin * pinAcAttached = new DigitalPin(5, INPUT);
 
 // Digital Out pins
-DigitalPin * pinLed = new DigitalPin(10, OUTPUT);
-DigitalPin * pinRelayMain = new DigitalPin(11, OUTPUT);
-DigitalPin * pinTimedOn = new DigitalPin(12, OUTPUT);
+DigitalPin * pinRelayMain = new DigitalPin(8, OUTPUT);
+DigitalPin * pinRelayMeter = new DigitalPin(9, OUTPUT);
+DigitalPin * pinLedMain = new DigitalPin(10, OUTPUT);
+DigitalPin * pinLedOperation = new DigitalPin(11, OUTPUT);
 
 // Display Pins
 // Analogue as digital pins A0-A5 (pin 14-19)
@@ -26,18 +26,17 @@ DigitalPin * displayData2 = new DigitalPin(16, OUTPUT);
 DigitalPin * displayData3 = new DigitalPin(17, OUTPUT);
 DigitalPin * displayData4 = new DigitalPin(18, OUTPUT);
 
-
 void setup() 
 {
   Serial.begin(9600);
 
   // Button is on PIN2 and the button handler manage Pin10-12 which is sent along as referenced data and is used in event-handler for ButtonEvent.
-  DigitalPin * pins[] = { pinLed, pinRelayMain, pinTimedOn };
-  ButtonEvent * bEvent = new ButtonEvent(pinButton, Handler::HandleButtonPress, Handler::HandleButtonLongPress, Handler::HandleButtonDoublePress, Handler::HandleButtonDownPress, NULL, pins);
+  DigitalPin * pins[] = { pinLedMain, pinLedOperation, pinRelayMeter, pinButton, pinAcAttached };
+  ButtonEvent * bEvent = new ButtonEvent(pinButton, Handler::HandleButtonPress, Handler::HandleButtonLongPress, Handler::HandleButtonDoublePress, pins);
   events->InsertLast(bEvent);
 
   // Controller On Led
-  pinLed->ToggleValue();
+  pinLedMain->ToggleValue();
 
   Serial.println("Initialized");
 }
