@@ -7,7 +7,6 @@ Pin::Pin(int pin, int direction, PinType type)
     _pinType = type;
 
     pinMode(_pin, _direction);
-    analo
 }
 
 

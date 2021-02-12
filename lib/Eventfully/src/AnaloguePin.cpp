@@ -8,13 +8,13 @@ AnaloguePin::AnaloguePin(int pin, int direction) : Pin(pin, direction, PinType::
     res2 = 1;
 }
 
-AnaloguePin::AnaloguePin(int pin, int resistor1, int resistor2) : Pin(pin, INPUT, PinType::Analogue)
+AnaloguePin::AnaloguePin(int pin, int resistor1, int resistor2) : Pin(pin, INPUT_PULLUP, PinType::Analogue)
 {
     res1 = resistor1;
     res2 = resistor2;
 }
 
-AnaloguePin::AnaloguePin(int pin, double measureMax, int resistor1, int resistor2) : Pin(pin, INPUT, PinType::Analogue)
+AnaloguePin::AnaloguePin(int pin, double measureMax, int resistor1, int resistor2) : Pin(pin, INPUT_PULLUP, PinType::Analogue)
 {
     res1 = resistor1;
     res2 = resistor2;
