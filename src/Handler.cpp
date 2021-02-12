@@ -2,7 +2,7 @@
 #include <LinkedList.h>
 #include "Handler.h"
 
-const char * turnOffName = "TurnOff";
+const char * turnOffName = "TurnOnOffMeter";
 
 // Timer Events
 int Handler::HandleTimerPressCompleted(TimerEvent * event, Pin * pin, int order)
@@ -12,19 +12,23 @@ int Handler::HandleTimerPressCompleted(TimerEvent * event, Pin * pin, int order)
     return 0;
 }
 
+int Handler::HandleButtonDown(ButtonEvent * event, DigitalPin * pin)
+{
+    DigitalPin * meterPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_METER];
+    SetOrExtendTimeForPinOff(event, meterPin, 15000, (char *)turnOffName);
+
+    return 1;
+}
+
 // Button events
 int Handler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 {
-    DigitalPin * relayPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_METER];
-    DigitalPin * pinLedOperation = ((DigitalPin**)event->_relatedData)[PIN_LEDOPERATION];
+    DigitalPin * operationLedPin = ((DigitalPin**)event->_relatedData)[PIN_LEDOPERATION];
+    DigitalPin * mainRelayPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_MAIN];
 
     // Check if we now are turning the battery on
-    if (relayPin->GetValue() == false)
-    {
-        relayPin->SetHigh();
-    }
-
-    pinLedOperation->SetHigh();
+    operationLedPin->SetHigh();
+    mainRelayPin->SetHigh();
 
     Serial.println("Handling ButtonPress");
 
@@ -33,11 +37,13 @@ int Handler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 
 int Handler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
 {
-    DigitalPin * relayPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_METER];
-    DigitalPin * pinLedOperation = ((DigitalPin**)event->_relatedData)[PIN_LEDOPERATION];
+    DigitalPin * meterPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_METER];
+    DigitalPin * operationLedPin = ((DigitalPin**)event->_relatedData)[PIN_LEDOPERATION];
+    DigitalPin * mainRelayPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_MAIN];
 
-    relayPin->SetLow();
-    pinLedOperation->SetLow();
+    meterPin->SetLow();
+    operationLedPin->SetLow();
+    mainRelayPin->SetLow();
 
     Serial.println("Handling ButtonLongPress");
 
@@ -46,13 +52,19 @@ int Handler::HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin)
 
 int Handler::HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin)
 {
-    Serial.println("Handling ButtonDoublePress (NOP)");
+    DigitalPin * relayPin = ((DigitalPin**)event->_relatedData)[PIN_RELAY_MAIN];
+    relayPin->ToggleValue();
+
+    Serial.println("Handling ButtonDoublePress (Toggle RelayPin)");
     return 0;
 }
 
-void Handler::SetOrExtendTimeForPinOff(Event * event, DigitalPin * pinLedOperation, unsigned long milliSeconds, char * turnOffName)
+void Handler::SetOrExtendTimeForPinOff(Event * event, DigitalPin * meterPin, unsigned long milliSeconds, char * turnOffName)
 {
-    pinLedOperation->SetHigh();
+    if (meterPin->GetValue() == false)
+    {
+        meterPin->SetHigh();
+    }
 
     // Check if there already is a pending "turn off diod".
     LinkedList * list = event->GetOwner();
@@ -62,5 +74,5 @@ void Handler::SetOrExtendTimeForPinOff(Event * event, DigitalPin * pinLedOperati
         list->Remove(l);
     }
 
-    list->InsertLast(new TimerEvent((char *)turnOffName, milliSeconds, true, Handler::HandleTimerPressCompleted, pinLedOperation));
+    list->InsertLast(new TimerEvent((char *)turnOffName, milliSeconds, true, Handler::HandleTimerPressCompleted, meterPin));
 }

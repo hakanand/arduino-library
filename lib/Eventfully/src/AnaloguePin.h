@@ -7,19 +7,20 @@
 class AnaloguePin : public Pin
 {
     private:
-        const float maxVoltage = 5.0;
+        float maxVoltage = 5.0;
 
     protected:
-        float value;
+        double value;
         long res1, res2;
 
     public:
         AnaloguePin(int pin, int direction);
         AnaloguePin(int pin, int res1, int res2);
+        AnaloguePin(int pin, double measureMax, int resistor1, int resistor2);
 
         float GetVoltage();
         float GetResultingVoltage();
-        void SetVoltage(float voltage);
+        void SetVoltage(double voltage);
 };
 
 #endif

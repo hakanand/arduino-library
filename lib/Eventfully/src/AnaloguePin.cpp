@@ -14,7 +14,14 @@ AnaloguePin::AnaloguePin(int pin, int resistor1, int resistor2) : Pin(pin, INPUT
     res2 = resistor2;
 }
 
-void AnaloguePin::SetVoltage(float voltage)
+AnaloguePin::AnaloguePin(int pin, double measureMax, int resistor1, int resistor2) : Pin(pin, INPUT, PinType::Analogue)
+{
+    res1 = resistor1;
+    res2 = resistor2;
+    maxVoltage = measureMax;
+}
+
+void AnaloguePin::SetVoltage(double voltage)
 {
     // Make sure that value is between 0 and maxVoltage (5)
     voltage = min(max(0, voltage), maxVoltage);
