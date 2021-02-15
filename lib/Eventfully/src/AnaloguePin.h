@@ -15,8 +15,8 @@ class AnaloguePin : public Pin
 
     public:
         AnaloguePin(int pin, int direction);
-        AnaloguePin(int pin, int res1, int res2);
-        AnaloguePin(int pin, double measureMax, int resistor1, int resistor2);
+        AnaloguePin(int pin, unsigned long resistor1, unsigned long resistor2);
+        AnaloguePin(int pin, double measureMax, unsigned long resistor1, unsigned long resistor2);
 
         double GetVoltage();
         void SetVoltage(double voltage);
