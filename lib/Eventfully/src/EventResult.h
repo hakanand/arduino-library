@@ -8,6 +8,9 @@ class EventResult
     public:
         bool _hasExecuted = false;
         bool _shouldRemoveEvent = false;
+
+        EventResult();
+        EventResult(bool hasExecuted, bool shouldRemoveEvent);
 };
 
 #endif
