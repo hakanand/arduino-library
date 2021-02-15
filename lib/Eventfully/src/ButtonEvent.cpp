@@ -1,4 +1,4 @@
-#include "ButtonEvent.h"
+#include <ButtonEvent.h>
 
 ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData) : Event()
 {
