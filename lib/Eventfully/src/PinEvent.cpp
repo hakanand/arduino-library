@@ -21,7 +21,6 @@ PinEvent::PinEvent(Pin * pin, PinEventFunction function, int low, int high) : Ev
 EventResult * PinEvent::Loop()
 {
     int value = _pin->GetValue();
-    EventResult result;
     EventType eventTypeForValue;
 
     if (_pinType == PinType::Digital)
@@ -37,8 +36,12 @@ EventResult * PinEvent::Loop()
     {
         _onEvent(this, _pin, eventTypeForValue);
         _curSelected = eventTypeForValue;
-        result._hasExecuted = true;
+        _result._hasExecuted = true;
+    }
+    else
+    {
+        _result._hasExecuted = false;
     }
 
-    return &result;
+    return &_result;
 }

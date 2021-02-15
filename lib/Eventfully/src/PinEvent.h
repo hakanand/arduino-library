@@ -26,6 +26,7 @@ class PinEvent : public Event
         int _lowSetting, _highSetting;
         
     protected:
+        EventResult _result;
 
     public:
         PinEvent(Pin * pin, PinEventFunction digitalValueChanged);
