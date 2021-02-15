@@ -29,13 +29,7 @@ void AnaloguePin::SetVoltage(double voltage)
     SetValue(value);
 }
 
-float AnaloguePin::GetVoltage()
-{
-    int value = GetValue();
-    return value / 1024 * _maxVoltage;
-}
-
-float AnaloguePin::GetResultingVoltage()
+double AnaloguePin::GetVoltage()
 {
     int value = GetValue();
     return value / (_resistor1 + _resistor2) * _resistor2 / 1024 * _maxVoltage;

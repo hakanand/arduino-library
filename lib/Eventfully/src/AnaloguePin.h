@@ -18,8 +18,7 @@ class AnaloguePin : public Pin
         AnaloguePin(int pin, int res1, int res2);
         AnaloguePin(int pin, double measureMax, int resistor1, int resistor2);
 
-        float GetVoltage();
-        float GetResultingVoltage();
+        double GetVoltage();
         void SetVoltage(double voltage);
 };
 
