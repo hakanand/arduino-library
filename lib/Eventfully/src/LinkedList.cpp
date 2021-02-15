@@ -1,6 +1,6 @@
 #include <arduino.h>
-#include "LinkedList.h"
-#include "ListItem.h"
+#include <LinkedList.h>
+#include <ListItem.h>
 
 LinkedList::LinkedList()
 {

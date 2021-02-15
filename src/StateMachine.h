@@ -11,6 +11,7 @@ class StateMachine : public LinkedList
         char * _name;
     public:
         StateMachine(char * name);
+        void Add(State * state);
 };
 
 #endif

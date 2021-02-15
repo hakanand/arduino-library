@@ -1,4 +1,4 @@
-#include "Pin.h"
+#include <Pin.h>
 
 Pin::Pin(int pin, int direction, PinType type)
 {

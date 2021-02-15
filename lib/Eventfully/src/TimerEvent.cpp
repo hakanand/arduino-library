@@ -1,4 +1,4 @@
-#include "TimerEvent.h"
+#include <TimerEvent.h>
 
 TimerEvent::TimerEvent(unsigned long delay, bool removeAfterUse, TimerEventFunction func, Pin * pin, void * relatedData)
 {

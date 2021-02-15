@@ -2,8 +2,8 @@
 #define __CLINKEDLIST_H
 
 #include <arduino.h>
-#include "Generic.h"
-#include "ListItem.h"
+#include <Generic.h>
+#include <ListItem.h>
 
 class LinkedList
 {

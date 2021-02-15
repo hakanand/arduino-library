@@ -1,8 +1,8 @@
 #define __LISTITEM
 
 #include <arduino.h>
-#include "ListItem.h"
-#include "LinkedList.h"
+#include <ListItem.h>
+#include <LinkedList.h>
 
 ListItem::ListItem()
 {

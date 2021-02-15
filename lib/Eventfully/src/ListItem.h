@@ -2,7 +2,7 @@
 #define __CLISTITEM_H
 
 #include <arduino.h>
-#include "Generic.h"
+#include <Generic.h>
 
 class LinkedList;
 
