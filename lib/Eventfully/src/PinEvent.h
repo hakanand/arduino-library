@@ -1,7 +1,8 @@
 #ifndef __PINEVENT_H
 #define __PINEVENT_H
 
-#include <Pin.h>
+#include <DigitalPin.h>
+#include <AnaloguePin.h>
 #include <Event.h>
 
 enum EventType
@@ -20,11 +21,18 @@ class PinEvent : public Event
 {
     private:
         PinEventFunction _onEvent = NULL;
+        PinType _pinType;
+        EventType _curSelected;
+        int _lowSetting, _highSetting;
+        
+    protected:
 
     public:
         PinEvent(Pin * pin, PinEventFunction digitalValueChanged);
-        PinEvent(Pin * pin, PinEventFunction analogueRangeBoundsAltered);
+        PinEvent(Pin * pin, PinEventFunction analogueRangeBoundsAltered, int low, int high);
         ~PinEvent();
+
+        virtual EventResult * Loop();
 };
 
 #endif
