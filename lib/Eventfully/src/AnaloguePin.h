@@ -7,11 +7,11 @@
 class AnaloguePin : public Pin
 {
     private:
-        float maxVoltage = 5.0;
+        float _maxVoltage = 5.0;
 
     protected:
-        double value;
-        long res1, res2;
+        double _value;
+        long _resistor1, _resistor2;
 
     public:
         AnaloguePin(int pin, int direction);
