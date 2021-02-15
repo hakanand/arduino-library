@@ -37,9 +37,10 @@ TimerEvent::~TimerEvent()
     }
 }
 
-EventResult * TimerEvent::Loop()
+EventResult TimerEvent::Loop()
 {
     unsigned long now = millis();
+    EventResult result;
 
     if (now - _lastOperation >= _delays[_timerOrder])
     {
@@ -54,7 +55,7 @@ EventResult * TimerEvent::Loop()
 
         if(_timerOrder >= _arrayItemCount)
         {
-            _result._hasExecuted = true;
+            result._hasExecuted = true;
             _timerOrder = 0;
         }
 
@@ -63,7 +64,7 @@ EventResult * TimerEvent::Loop()
         // Serial.println(message);
     }
 
-    return &_result;
+    return result;
 }
 
 void TimerEvent::Init(unsigned long * delay, bool removeAfterUse, TimerEventFunction func, Pin * pin, void * relatedData)

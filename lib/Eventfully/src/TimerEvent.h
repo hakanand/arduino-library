@@ -27,7 +27,7 @@ class TimerEvent : public Event
         TimerEvent(char * name, unsigned long * delay, bool removeAfterUse, TimerEventFunction func, Pin * pin = NULL, void * relatedData = NULL);
         ~TimerEvent();
 
-        EventResult * Loop();
+        EventResult Loop();
         void Init(unsigned long * delay, bool removeAfterUse, TimerEventFunction func, Pin * pin, void * relatedData);
 };
 

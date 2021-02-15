@@ -30,7 +30,7 @@ class ButtonEvent : public Event
 
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, ButtonEventFunction onDown, ButtonEventFunction onUp, void * relatedData = NULL);
-        EventResult * Loop();
+        EventResult Loop();
 };
 
 #endif

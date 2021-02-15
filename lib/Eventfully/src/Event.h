@@ -23,7 +23,6 @@ class Event : public ListItem
         bool _enabled;
         Pin * _pin;
         EventFunction _function = NULL;
-        EventResult _result;
 
         void Enable() { _enabled = true; }
         void Disable() { _enabled = false; } 
@@ -38,7 +37,7 @@ class Event : public ListItem
         Event(char * name, EventFunction func, int runEveryLaps, Pin * pin = NULL);
         Event(char * name, EventFunction func, unsigned long runEveryMilliseconds, Pin * pin = NULL);
 
-        virtual EventResult * Loop();
+        virtual EventResult Loop();
         bool IsEnabled() { return _enabled; }
         bool _removeAfterUse = false;
         void SetEnabled(bool enable) { _enabled = enable; }

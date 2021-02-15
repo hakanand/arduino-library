@@ -28,9 +28,9 @@ int EventController::Loop(unsigned long loopMinLapLimit)
         if (item->IsEnabled())
         {
             ++numberOfCallItems;
-            EventResult * result = item->Loop();
+            EventResult result = item->Loop();
 
-            if ((result->_hasExecuted && item->_removeAfterUse == true) || result->_shouldRemoveEvent == true)
+            if ((result._hasExecuted && item->_removeAfterUse == true) || result._shouldRemoveEvent == true)
             {
                 removal = true;
                 item = (Event *)Remove(item);

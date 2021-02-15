@@ -19,10 +19,11 @@ ButtonEvent::ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEv
 }
 
 
-EventResult * ButtonEvent::Loop()
+EventResult ButtonEvent::Loop()
 {
     bool value = _pin->GetValue();
     unsigned long now = millis();
+    EventResult result;
 
     if (now - _startPressTime < SKIPPRESS_WITHIN_TIME)
     {
@@ -68,5 +69,5 @@ EventResult * ButtonEvent::Loop()
         _previousPressTime = _startPressTime = 0;
     }
 
-    return &_result;
+    return result;
 }

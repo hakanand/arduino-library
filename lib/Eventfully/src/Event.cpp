@@ -57,10 +57,10 @@ void Event::Init(EventFunction func, unsigned long runEveryMilliseconds, int run
     _pin = relatedPin; 
 }
 
-EventResult * Event::Loop() 
+EventResult Event::Loop() 
 {
     unsigned long now = millis();
-    _result._hasExecuted = false;
+    EventResult result;
 
     if(_enabled && _function != NULL && _lapCounter % _runEveryLaps == 0 && (now - _lastExecuted > _runEveryMilliseconds || now < _lastExecuted))
     {
@@ -69,11 +69,11 @@ EventResult * Event::Loop()
 
         if (returnValue > 0)
         {
-            _result._hasExecuted = true;
+            result._hasExecuted = true;
         }
     }
 
     ++_lapCounter;
 
-    return &_result;
+    return result;
 }

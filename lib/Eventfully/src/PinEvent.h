@@ -25,15 +25,12 @@ class PinEvent : public Event
         EventType _curSelected;
         int _lowSetting, _highSetting;
         
-    protected:
-        EventResult _result;
-
     public:
         PinEvent(Pin * pin, PinEventFunction digitalValueChanged);
         PinEvent(Pin * pin, PinEventFunction analogueRangeBoundsAltered, int low, int high);
         ~PinEvent();
 
-        virtual EventResult * Loop();
+        virtual EventResult Loop();
 };
 
 #endif
