@@ -4,13 +4,16 @@
 #include <Arduino.h>
 #include <LinkedList.h>
 #include <State.h>
+#include <PinEvent.h>
 
 class StateMachine : public LinkedList
 {
+    private:
+        LinkedList * _monitorPins;
     protected:
         char * _name;
     public:
-        StateMachine(char * name);
+        StateMachine(LinkedList * monitorPins);
         void Add(State * state);
 };
 
