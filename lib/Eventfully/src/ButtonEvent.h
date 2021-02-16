@@ -12,6 +12,14 @@ typedef int (*ButtonEventFunction)(ButtonEvent *, DigitalPin *);
 #define DOUBLEPRESS_MILLIS 200
 #define SKIPPRESS_WITHIN_TIME 30
 
+enum LatestOperationType
+{
+    None,
+    SinglePress,
+    LongPress,
+    DoublePress
+};
+
 class ButtonEvent : public Event
 {
     private:
@@ -24,6 +32,7 @@ class ButtonEvent : public Event
         bool _lastValue;
         unsigned long _startPressTime = 0;
         unsigned long _previousPressTime = 0;
+        LatestOperationType _latestOperation = LatestOperationType::None;
 
     public:
         void * _relatedData;
@@ -31,6 +40,7 @@ class ButtonEvent : public Event
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, ButtonEventFunction onDown, ButtonEventFunction onUp, void * relatedData = NULL);
         EventResult Loop();
+        LatestOperationType GetLastOperation();
 };
 
 #endif

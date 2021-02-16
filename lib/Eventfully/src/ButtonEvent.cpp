@@ -32,16 +32,26 @@ EventResult ButtonEvent::Loop()
     else if (value == _lastValue && value == true && _startPressTime > 0)
     {
         // Long press (On Hold)
-        if (now - _startPressTime > LONGPRESS_MILLIS && _onHold != NULL)
+        if (now - _startPressTime > LONGPRESS_MILLIS)
         {
-            _onHold(this, _pin);
+            if (_onHold != NULL)
+            {
+                _onHold(this, _pin);
+            }
+
             _previousPressTime = _startPressTime = 0;
+            _latestOperation = LatestOperationType::LongPress;
         }
         // Double press
-        else if (_onDoublePress != NULL && _startPressTime - _previousPressTime <= DOUBLEPRESS_MILLIS)
+        else if (_startPressTime - _previousPressTime <= DOUBLEPRESS_MILLIS)
         {
-            _onDoublePress(this, _pin);
+            if (_onDoublePress != NULL)
+            {
+                _onDoublePress(this, _pin);
+            }
+
             _previousPressTime = _startPressTime = 0;
+            _latestOperation = LatestOperationType::DoublePress;
         }
     }
     else if (value != _lastValue)
@@ -65,9 +75,23 @@ EventResult ButtonEvent::Loop()
     }
     else if (_startPressTime > 0 && now - _startPressTime > DOUBLEPRESS_MILLIS)
     {
-        _onPress(this, _pin);
+        if (_onPress != NULL)
+        {
+            _onPress(this, _pin);
+        }
+
         _previousPressTime = _startPressTime = 0;
+        _latestOperation = LatestOperationType::LongPress;
     }
 
     return result;
+}
+
+// Get operation and clear it
+LatestOperationType ButtonEvent::GetLastOperation()
+{
+    LatestOperationType returnValue = _latestOperation;
+    _latestOperation = LatestOperationType::None;
+
+    return returnValue;
 }
