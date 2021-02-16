@@ -7,6 +7,9 @@
 #include <TimerEvent.h>
 #include "Handler.h"
 
+// Allow floating point operations in printf
+asm(".global _printf_float");
+
 EventController * events = new EventController();
 
 // Input pin for button.
@@ -31,7 +34,7 @@ DigitalPin * displayData4 = new DigitalPin(18, OUTPUT);
 void setup() 
 {
   Serial.begin(9600);
-
+  
     // Button is on PIN2 and the button handler manage Pin10-12 which is sent along as referenced data and is used in event-handler for ButtonEvent.
   DigitalPin * pins[] = { pinLedMain, pinLedOperation, pinRelayMeter, pinButton, pinAcAttached, pinRelayMain };
   ButtonEvent * bEvent = new ButtonEvent(pinButton, Handler::HandleButtonPress, Handler::HandleButtonLongPress, Handler::HandleButtonDoublePress, Handler::HandleButtonDown, NULL, pins);

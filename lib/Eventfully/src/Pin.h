@@ -22,6 +22,8 @@ class Pin : ListItem
         Pin(int pin, int direction, PinType type);
         void SetValue(int value);
         int GetValue();
+
+        virtual bool GetDigitalValue();
 };
 
 #endif

@@ -39,3 +39,15 @@ int Pin::GetValue()
 
     return returnValue;
 }
+
+bool Pin::GetDigitalValue()
+{
+    if (_pinType == PinType::Digital)
+    {
+        return GetValue() == HIGH;
+    }
+    else
+    {
+        return GetValue() >= 512;
+    }
+}
