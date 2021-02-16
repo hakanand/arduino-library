@@ -95,3 +95,15 @@ LatestOperationType ButtonEvent::GetLastOperation()
 
     return returnValue;
 }
+
+bool ButtonEvent::GetDigitalValue()
+{
+    LatestOperationType type = GetLastOperation();
+
+    if (type == LatestOperationType::SinglePress)
+    {
+        return true;
+    }
+
+    return false;
+}

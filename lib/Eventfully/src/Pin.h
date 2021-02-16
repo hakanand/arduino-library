@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <ListItem.h>
+#include <StateSource.h>
 
 enum PinType
 {
@@ -10,7 +11,7 @@ enum PinType
     Analogue
 };
 
-class Pin : ListItem
+class Pin : ListItem, public StateSource
 {
     protected:
         int _pin;
@@ -22,7 +23,8 @@ class Pin : ListItem
         Pin(int pin, int direction, PinType type);
         void SetValue(int value);
         int GetValue();
-
+        
+        // From StateSource
         virtual bool GetDigitalValue();
 };
 

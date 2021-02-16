@@ -20,7 +20,7 @@ enum LatestOperationType
     DoublePress
 };
 
-class ButtonEvent : public Event
+class ButtonEvent : public Event, public StateSource
 {
     private:
         ButtonEventFunction _onPress;
@@ -40,7 +40,9 @@ class ButtonEvent : public Event
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, ButtonEventFunction onDown, ButtonEventFunction onUp, void * relatedData = NULL);
         EventResult Loop();
+
         LatestOperationType GetLastOperation();
+        virtual bool GetDigitalValue();
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <Pin.h>
+#include <StateSource.h>
 
 class AnaloguePin : public Pin
 {
