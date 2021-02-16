@@ -9,12 +9,15 @@
 class StateMachine : public LinkedList
 {
     private:
-        LinkedList * _monitorPins;
+        unsigned long _lastExecution = 0;
+        void ** _monitorItems;
     protected:
-        char * _name;
+        State * _currentState = NULL;
+        void AssignAndExecute(State * state);
     public:
-        StateMachine(LinkedList * monitorPins);
+        StateMachine(void * monitorItems[]);
         void Add(State * state);
+        int Loop(unsigned long loopMinLapLimit = 0);
 };
 
 #endif

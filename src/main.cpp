@@ -5,9 +5,15 @@
 #include <EventController.h>
 #include <ButtonEvent.h>
 #include <TimerEvent.h>
+#include <StateSource.h>
+
 #include "Handler.h"
+#include "StateMachine.h"
+
+void InitializeStateMachine();
 
 EventController * events = new EventController();
+StateMachine * machine;
 
 // Input pin for button.
 DigitalPin * pinButton = new DigitalPin(4, INPUT);
@@ -40,6 +46,8 @@ void setup()
   ButtonEvent * bEvent = new ButtonEvent(pinButton, Handler::HandleButtonPress, Handler::HandleButtonLongPress, Handler::HandleButtonDoublePress, Handler::HandleButtonDown, NULL, pins);
   events->InsertLast(bEvent);
 
+  InitializeStateMachine();
+
   // Controller On Led
   pinLedMain->ToggleValue();
 
@@ -57,4 +65,26 @@ void loop()
   }
 
   events->Loop();
+}
+
+class Test
+{
+  public:
+    static int StateChangeDefault(char * stateName);
+};
+
+int Test::StateChangeDefault(char * stateName)
+{
+  return 0;
+}
+
+void InitializeStateMachine()
+{
+  void * monitorItems[] = { pinAcAttached, pinRelayMain };
+  machine = new StateMachine(monitorItems);
+
+  DigitalCompare * a = new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never };
+
+  State * s = new State((char *)"Initial", Test::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL );
+  machine->Add(s);
 }

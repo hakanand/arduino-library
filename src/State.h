@@ -6,12 +6,23 @@
 #include <Pin.h>
 #include <Event.h>
 
+typedef int (*StateChangeFunction)(char * stateName);
+
+enum DigitalCompare
+{
+    False,
+    True,
+    NA,
+    Never
+};
+
 class State : public ListItem
 {
     protected:
-        char * _name;
+        StateChangeFunction _stateChangeFunction;
     public:
-        State(char * name);
+        DigitalCompare * _enterCriteria, * exitCriteria;
+        State(char * name, StateChangeFunction function, DigitalCompare * enterCriteria, DigitalCompare * exitCriteria);
 };
 
 #endif
