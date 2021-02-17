@@ -1,0 +1,14 @@
+{
+    "name": "Eventful",
+    "version": "1.0.0",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/hakanand/arduino-library"
+    },
+    "authors":
+    {
+        "name": "Håkan Andersson",
+        "email": "hakan.andersson@whileconsulting.se"
+    }
+}
