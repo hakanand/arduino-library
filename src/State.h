@@ -16,13 +16,25 @@ enum DigitalCompare
     Never
 };
 
+enum CanMoveChoices
+{
+    Yes,
+    No,
+    Must
+};
+
 class State : public ListItem
 {
     protected:
         StateChangeFunction _stateChangeFunction;
     public:
-        DigitalCompare * _enterCriteria, * exitCriteria;
+        DigitalCompare * _enterCriteria, * _exitCriteria;
         State(char * name, StateChangeFunction function, DigitalCompare * enterCriteria, DigitalCompare * exitCriteria);
+
+        bool Enter(bool * values);
+        bool Exit(bool * values);
+        CanMoveChoices ShouldEnter(bool * values);
+        CanMoveChoices CanExit(bool * values);
 };
 
 #endif

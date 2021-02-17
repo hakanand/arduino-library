@@ -9,6 +9,7 @@
 
 #include "Handler.h"
 #include "StateMachine.h"
+#include "State.h"
 
 void InitializeStateMachine();
 
@@ -34,7 +35,7 @@ DigitalPin * displayData2 = new DigitalPin(16, OUTPUT);
 DigitalPin * displayData3 = new DigitalPin(17, OUTPUT);
 DigitalPin * displayData4 = new DigitalPin(18, OUTPUT);
 
-void setup() 
+void setup()
 {
   // Allow floating point operations in printf
   asm(".global _printf_float");
@@ -54,17 +55,12 @@ void setup()
   Serial.println("Initialized");
 }
 
-float prevVoltage;
 void loop() 
 {
-  float value = displayEnable->GetVoltage();
-  if(value != prevVoltage)
-  {
-    Serial.println("Val changed"); //value);
-    prevVoltage = value;
-  }
+  // Just for showing value read.
+  displayEnable->GetVoltage();
 
-  events->Loop();
+  events->Loop(50);
 }
 
 class Test
@@ -83,8 +79,6 @@ void InitializeStateMachine()
   void * monitorItems[] = { pinAcAttached, pinRelayMain };
   machine = new StateMachine(monitorItems);
 
-  DigitalCompare * a = new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never };
-
-  State * s = new State((char *)"Initial", Test::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL );
+  State * s = new State((char *)"Initial", Test::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL);
   machine->Add(s);
 }
