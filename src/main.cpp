@@ -35,11 +35,11 @@ DigitalPin * displayData2 = new DigitalPin(16, OUTPUT);
 DigitalPin * displayData3 = new DigitalPin(17, OUTPUT);
 DigitalPin * displayData4 = new DigitalPin(18, OUTPUT);
 
+//
+// Setup operations
+//
 void setup()
 {
-  // Allow floating point operations in printf
-  asm(".global _printf_float");
-
   Serial.begin(9600);
   
     // Button is on PIN2 and the button handler manage Pin10-12 which is sent along as referenced data and is used in event-handler for ButtonEvent.
@@ -49,29 +49,18 @@ void setup()
 
   InitializeStateMachine();
 
+  Serial.println("Initialized");
+
   // Controller On Led
   pinLedMain->ToggleValue();
-
-  Serial.println("Initialized");
 }
 
+// 
+// Main Loop
+// 
 void loop() 
 {
-  // Just for showing value read.
-  displayEnable->GetVoltage();
-
   events->Loop(50);
-}
-
-class Test
-{
-  public:
-    static int StateChangeDefault(char * stateName);
-};
-
-int Test::StateChangeDefault(char * stateName)
-{
-  return 0;
 }
 
 void InitializeStateMachine()
