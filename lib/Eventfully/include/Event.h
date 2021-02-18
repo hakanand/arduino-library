@@ -38,6 +38,7 @@ class Event : public ListItem
         Event(char * name, EventFunction func, unsigned long runEveryMilliseconds, Pin * pin = NULL);
 
         virtual EventResult Loop();
+		virtual const char * GetType() { return "Event"; };
         bool IsEnabled() { return _enabled; }
         bool _removeAfterUse = false;
         void SetEnabled(bool enable) { _enabled = enable; }

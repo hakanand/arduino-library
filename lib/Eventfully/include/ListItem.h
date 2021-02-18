@@ -12,7 +12,6 @@ class ListItem
 		ListItem *		prev;
 		ListItem *		next;
 		LinkedList *	owner;
-		const char *	classType = "ListItem";
 
 	protected:
 		ListItem * GetPrev() { return prev; };
@@ -31,10 +30,10 @@ class ListItem
 
 		virtual WORD	Read() { return 0; };
 		virtual WORD	Write() { return 0; };
-		virtual const char *	TypeOfClass() { return classType; };
 		virtual void 	Switch(ListItem * pSwitch);
 		
 		LinkedList * GetOwner() { return owner; };
+		virtual const char * GetType() { return "ListItem"; };
 
 		time_t	tmLastUsed;
 		char *	pszName;

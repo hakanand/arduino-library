@@ -11,6 +11,7 @@ class EventResult
 
         EventResult();
         EventResult(bool hasExecuted, bool shouldRemoveEvent);
+		virtual const char * GetType() { return "EventResult"; };
 };
 
 #endif

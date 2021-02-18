@@ -31,6 +31,7 @@ class PinEvent : public Event
         ~PinEvent();
 
         virtual EventResult Loop();
+		virtual const char * GetType() { return "PinEvent"; };
 };
 
 #endif

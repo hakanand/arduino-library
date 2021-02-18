@@ -61,6 +61,7 @@ void setup()
 void loop() 
 {
   events->Loop(50);
+  machine->Loop(50);
 }
 
 void InitializeStateMachine()
@@ -68,6 +69,6 @@ void InitializeStateMachine()
   void * monitorItems[] = { pinAcAttached, pinRelayMain };
   machine = new StateMachine(monitorItems);
 
-  State * s = new State((char *)"Initial", Test::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL);
+  State * s = new State((char *)"Initial", Handler::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL);
   machine->Add(s);
 }

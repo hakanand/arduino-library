@@ -36,6 +36,7 @@ class ButtonEvent : public Event, public StateSource
 
     public:
         void * _relatedData;
+		virtual const char * GetType() { return "ButtonEvent"; };
 
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, void * relatedData = NULL);
         ButtonEvent(DigitalPin * pin, ButtonEventFunction onPress, ButtonEventFunction onHold, ButtonEventFunction onDoublePress, ButtonEventFunction onDown, ButtonEventFunction onUp, void * relatedData = NULL);

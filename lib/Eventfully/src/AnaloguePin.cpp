@@ -58,7 +58,6 @@ void AnaloguePin::SetVoltage(double voltage)
 double AnaloguePin::GetVoltage()
 {
     int value = Pin::GetValue();
-    char output[32];
     
     double result = value / (_resistor1 + _resistor2) * _resistor2 / 1024 * _maxVoltage;
     return result;

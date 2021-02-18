@@ -19,7 +19,7 @@ class TimerEvent : public Event
     public:
         unsigned long * _delays = NULL;
         void * _relatedData = NULL;
-        // Pin * _pin = NULL;
+		virtual const char * GetType() { return "TimerEvent"; };
 
         TimerEvent(unsigned long delay, bool removeAfterUse, TimerEventFunction func, Pin * pin = NULL, void * relatedData = NULL);
         TimerEvent(unsigned long * delay, bool removeAfterUse, TimerEventFunction func, Pin * pin = NULL, void * relatedData = NULL);

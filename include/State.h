@@ -6,7 +6,9 @@
 #include <Pin.h>
 #include <Event.h>
 
-typedef int (*StateChangeFunction)(char * stateName);
+class State;
+
+typedef int (*StateChangeFunction)(State * state);
 
 enum DigitalCompare
 {

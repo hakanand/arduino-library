@@ -26,6 +26,7 @@ class Pin : ListItem, public StateSource
         
         // From StateSource
         virtual bool GetDigitalValue();
+		virtual const char * GetType() { return "Pin"; };
 };
 
 #endif

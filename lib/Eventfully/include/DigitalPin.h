@@ -13,6 +13,7 @@ class DigitalPin : public Pin
 
     public:
         DigitalPin(int pin, int direction);
+		virtual const char * GetType() { return "DigitalPin"; };
 
         void SetLow();
         void SetHigh();

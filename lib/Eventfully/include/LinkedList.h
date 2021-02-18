@@ -16,6 +16,7 @@ class LinkedList
 	public:
 		LinkedList();
 		virtual ~LinkedList();
+		virtual const char * GetType() { return "LinkedList"; };
 		
 		ListItem *	InsertFirst(ListItem *); // new
 		ListItem *	InsertLast(ListItem * insert);

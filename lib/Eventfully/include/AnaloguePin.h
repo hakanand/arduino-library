@@ -21,6 +21,7 @@ class AnaloguePin : public Pin
         AnaloguePin(int pin, double measureMax, unsigned long resistor1, unsigned long resistor2);
         AnaloguePin(int pin, unsigned long resistor1, unsigned long resistor2, double voltageLow, double voltageHigh);
         AnaloguePin(int pin, double measureMax, unsigned long resistor1, unsigned long resistor2, double voltageLow, double voltageHigh);
+		virtual const char * GetType() { return "AnaloguePin"; };
 
         double GetVoltage();
         void SetVoltage(double voltage);
