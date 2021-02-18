@@ -4,6 +4,7 @@
 #include <DigitalPin.h>
 #include <ButtonEvent.h>
 #include <TimerEvent.h>
+#include <State.h>
 
 #define PIN_LEDMAIN 0
 #define PIN_LEDOPERATION 1
@@ -20,7 +21,8 @@ class Handler
         static int HandleButtonPress(ButtonEvent * event, DigitalPin * pin);
         static int HandleButtonDown(ButtonEvent * event, DigitalPin * pin);
         static int HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin);
- 
+        static int StateChangeDefault(State * state);
+
         // NOP
         static int HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin);
         static int HandleTimerPressCompleted(TimerEvent * event, Pin * pin, int order);

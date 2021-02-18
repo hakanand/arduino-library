@@ -20,6 +20,11 @@ int Handler::HandleButtonDown(ButtonEvent * event, DigitalPin * pin)
     return 1;
 }
 
+int Handler::StateChangeDefault(State * state)
+{
+  return 0;
+}
+
 // Button events
 int Handler::HandleButtonPress(ButtonEvent * event, DigitalPin * pin)
 {
