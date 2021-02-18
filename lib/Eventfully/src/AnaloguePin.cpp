@@ -61,9 +61,6 @@ double AnaloguePin::GetVoltage()
     char output[32];
     
     double result = value / (_resistor1 + _resistor2) * _resistor2 / 1024 * _maxVoltage;
-    sprintf(output, "%d - %f", value, result);
-    Serial.println(output);
-
     return result;
 }
 
