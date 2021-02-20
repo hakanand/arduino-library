@@ -37,6 +37,7 @@ class State : public ListItem
 {
     protected:
         StateChangeFunction _stateChangeFunction;
+        CanChangeStateReplies MatchValues(DigitalCompare * _enterCriteria, bool * values);
     public:
         DigitalCompare * _enterCriteria, * _exitCriteria;
         State(char * name, StateChangeFunction function);

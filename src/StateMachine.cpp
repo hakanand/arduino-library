@@ -67,7 +67,10 @@ EventResult StateMachine::Loop()
         // Was a new state approved?
         if (newState != NULL)
         {
+            _currentState->Exit(values);
             newState->Enter(values);
+
+            _currentState = newState;
         }
     }
 
