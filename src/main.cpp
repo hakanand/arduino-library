@@ -5,7 +5,7 @@
 #include <EventController.h>
 #include <ButtonEvent.h>
 #include <TimerEvent.h>
-// #include <LiquidCrystal.h>
+#include <LiquidCrystal.h>
 
 #include "Handler.h"
 #include "StateMachine.h"

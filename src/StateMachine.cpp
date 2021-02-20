@@ -1,9 +1,19 @@
+#include <ButtonEvent.h>
 #include "StateMachine.h"
 
 StateMachine::StateMachine(ListItem * monitorItems[])
 {
     _monitorItems = monitorItems;
     _itemCount = sizeof(_monitorItems) / sizeof(void *);
+    _monitorValues = (bool *)malloc(_itemCount * sizeof(bool));
+}
+
+StateMachine::~StateMachine()
+{
+    if(_itemCount > 0)
+    {
+        free(_monitorValues);
+    }
 }
 
 void StateMachine::Add(State * state)
@@ -66,15 +76,37 @@ EventResult StateMachine::Loop()
 
 bool * StateMachine::GetMonitorItemValues()
 {
+
     for(int i=0; i < _itemCount; ++i)
     {
         // Check what type of supported class this is.
         const char * type = _monitorItems[i]->GetType();
-        if (strcmp(type, "DigitalPin"))
+        if (strcmp(type, "DigitalPin") == 0 || strcmp(type, "AnaloguePin") == 0 || strcmp(type, "Pin") == 0)
         {
-
+            _monitorValues[i] = ((Pin *)_monitorItems[i])->GetDigitalValue();
+        }
+        else if (strcmp(type, "ButtonEvent") == 0)
+        {
+            _monitorValues[i] = ((ButtonEvent *)_monitorItems[i])->GetDigitalValue();
         }
     }
 
-    return new bool[2] { true, false };
+    return _monitorValues;
+}
+
+// Is used to skip checks (for performance) if no montitorvalues have changed.
+bool StateMachine::MonitorValuesHasChanged(bool * previousValues, bool * newValues)
+{
+    bool hasChanged = false;
+ 
+    for(int i = 0; i < _itemCount; ++i)
+    {
+        if (previousValues[i] != newValues[i])
+        {
+            hasChanged = true;
+            break;
+        }
+    }
+    
+    return hasChanged;
 }
