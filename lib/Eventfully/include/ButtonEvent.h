@@ -20,7 +20,7 @@ enum LatestOperationType
     DoublePress
 };
 
-class ButtonEvent : public Event, public StateSource
+class ButtonEvent : public Event
 {
     private:
         ButtonEventFunction _onPress;

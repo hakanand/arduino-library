@@ -12,7 +12,6 @@ class EventController : public LinkedList
 
     public:
         EventController();
-		virtual const char * GetType() { return "EventController"; };
         int Loop(unsigned long loopMinLapLimit = 0);
 };
 

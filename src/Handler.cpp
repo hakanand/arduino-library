@@ -20,9 +20,9 @@ int Handler::HandleButtonDown(ButtonEvent * event, DigitalPin * pin)
     return 1;
 }
 
-int Handler::StateChangeDefault(State * state)
+CanChangeStateReplies Handler::StateChangeDefault(State * state, StateFunctionOptions options, bool * values)
 {
-  return 0;
+  return CanChangeStateReplies::Yes;
 }
 
 // Button events

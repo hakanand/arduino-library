@@ -21,7 +21,7 @@ class Handler
         static int HandleButtonPress(ButtonEvent * event, DigitalPin * pin);
         static int HandleButtonDown(ButtonEvent * event, DigitalPin * pin);
         static int HandleButtonLongPress(ButtonEvent * event, DigitalPin * pin);
-        static int StateChangeDefault(State * state);
+        static CanChangeStateReplies StateChangeDefault(State * state, StateFunctionOptions options, bool * values);
 
         // NOP
         static int HandleButtonDoublePress(ButtonEvent * event, DigitalPin * pin);

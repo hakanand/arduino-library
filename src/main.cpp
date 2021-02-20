@@ -5,7 +5,7 @@
 #include <EventController.h>
 #include <ButtonEvent.h>
 #include <TimerEvent.h>
-#include <StateSource.h>
+// #include <LiquidCrystal.h>
 
 #include "Handler.h"
 #include "StateMachine.h"
@@ -61,14 +61,14 @@ void setup()
 void loop() 
 {
   events->Loop(50);
-  machine->Loop(50);
 }
 
 void InitializeStateMachine()
 {
-  void * monitorItems[] = { pinAcAttached, pinRelayMain };
+  ListItem * monitorItems[] = { pinAcAttached, pinRelayMain };
   machine = new StateMachine(monitorItems);
 
   State * s = new State((char *)"Initial", Handler::StateChangeDefault, new DigitalCompare[2] { DigitalCompare::Never, DigitalCompare::Never }, NULL);
   machine->Add(s);
+  events->InsertLast(machine);
 }

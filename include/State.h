@@ -8,8 +8,6 @@
 
 class State;
 
-typedef int (*StateChangeFunction)(State * state);
-
 enum DigitalCompare
 {
     False,
@@ -18,12 +16,21 @@ enum DigitalCompare
     Never
 };
 
-enum CanMoveChoices
+enum CanChangeStateReplies
 {
     Yes,
     No,
     Must
 };
+
+enum StateFunctionOptions
+{
+    ShouldEnter,
+    CanExit,
+    Process
+};
+
+typedef CanChangeStateReplies (*StateChangeFunction)(State * state, StateFunctionOptions options, bool * values);
 
 class State : public ListItem
 {
@@ -31,12 +38,13 @@ class State : public ListItem
         StateChangeFunction _stateChangeFunction;
     public:
         DigitalCompare * _enterCriteria, * _exitCriteria;
+        State(char * name, StateChangeFunction function);
         State(char * name, StateChangeFunction function, DigitalCompare * enterCriteria, DigitalCompare * exitCriteria);
 
         bool Enter(bool * values);
         bool Exit(bool * values);
-        CanMoveChoices ShouldEnter(bool * values);
-        CanMoveChoices CanExit(bool * values);
+        CanChangeStateReplies ShouldEnter(bool * values);
+        CanChangeStateReplies CanExit(bool * values);
 };
 
 #endif

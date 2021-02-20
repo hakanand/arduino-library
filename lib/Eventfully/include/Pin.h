@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <ListItem.h>
-#include <StateSource.h>
 
 enum PinType
 {
@@ -11,13 +10,14 @@ enum PinType
     Analogue
 };
 
-class Pin : ListItem, public StateSource
+class Pin : public ListItem
 {
     protected:
         int _pin;
         int _direction;
         int _value;
         PinType _pinType;
+        bool _iverted = false;
 
     public:
         Pin(int pin, int direction, PinType type);

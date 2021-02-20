@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <Pin.h>
-#include <StateSource.h>
 
 class DigitalPin : public Pin
 {

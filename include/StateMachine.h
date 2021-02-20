@@ -6,18 +6,22 @@
 #include <State.h>
 #include <PinEvent.h>
 
-class StateMachine : public LinkedList
+class StateMachine : public LinkedList, public Event
 {
     private:
         unsigned long _lastExecution = 0;
-        void ** _monitorItems;
+        ListItem ** _monitorItems;
+        int _itemCount;
     protected:
         State * _currentState = NULL;
         void AssignAndExecute(State * state);
+        bool * GetMonitorItems();
     public:
-        StateMachine(void * monitorItems[]);
+        StateMachine(ListItem * monitorItems[]);
+        bool * GetMonitorItemValues();
+        virtual EventResult Loop();
         void Add(State * state);
-        int Loop(unsigned long loopMinLapLimit = 0);
+		virtual const char * GetType() { return "StateMachine"; };
 };
 
 #endif
