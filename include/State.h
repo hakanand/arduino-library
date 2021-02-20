@@ -27,7 +27,8 @@ enum StateFunctionOptions
 {
     ShouldEnter,
     CanExit,
-    Process
+    Enter,
+    Exit
 };
 
 typedef CanChangeStateReplies (*StateChangeFunction)(State * state, StateFunctionOptions options, bool * values);
